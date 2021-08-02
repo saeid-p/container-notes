@@ -4,17 +4,27 @@ My notes on containers, docker, and K8s.
 # Docker Commands
 - **Checking Docker Version: `docker version`**
 
-## Registry & Repository Commands
+## Registries
 A repository is a *hosted* collection of tagged images that together create the file system for a container. A registry is a *host* (a server) that stores repositories and provides an HTTP API for [managing the uploading and downloading of repositories](https://docs.docker.com/engine/tutorials/dockerrepos/).
 Docker.com hosts its own [index](https://hub.docker.com/) to a central registry which contains a large number of repositories.
 
+Container registries are a collection of image repositories. You can base your images on a registry image. You can create containers directly from an image in a registry. The relationship between Docker containers, images, and registries is an important concept when architecting and building containerized applications or microservices. This approach greatly shortens the time between development and deployment.
+
+Docker has a public registry hosted at the Docker Hub that you can use. .NET Core related images are listed at the Docker Hub.
+
+The Microsoft Container Registry (MCR) is the official source of Microsoft-provided container images. The MCR is built on Azure CDN to provide globally-replicated images. However, the MCR does not have a public-facing website and the primary way to learn about Microsoft-provided container images is through the Microsoft Docker Hub pages.
+
+### Repositories Command
 - [`**docker login**`](https://docs.docker.com/engine/reference/commandline/login) to login to a registry.
 - [**`docker logout`**](https://docs.docker.com/engine/reference/commandline/logout) to logout from a registry.
 - [**`docker search`**](https://docs.docker.com/engine/reference/commandline/search) searches registry for image.
 - [**`docker pull`**](https://docs.docker.com/engine/reference/commandline/pull) pulls an image from registry to local machine.
 - [**`docker push`**](https://docs.docker.com/engine/reference/commandline/push) pushes an image to the registry from local machine.
 
-## Image Commands
+## Images
+An image is an ordered collection of filesystem changes that form the basis of a container. The image doesn't have a state and is read-only. Much the time an image is based on another image, but with some customization. For example, when you create an new image for your application, you would base it on an existing image that already contains the .NET Core runtime. Because containers are created from images, images have a set of run parameters (such as a starting executable) that run when the container starts.
+
+### Image Commands
 - [**`docker images`**](https://docs.docker.com/engine/reference/commandline/images) shows all images.
     - **[`docker image ls`](https://docs.docker.com/engine/reference/commandline/image_ls/)** lists images.
 - [**`docker import`**](https://docs.docker.com/engine/reference/commandline/import) creates an image from a tarball.
@@ -26,7 +36,10 @@ Docker.com hosts its own [index](https://hub.docker.com/) to a central registr
     - [**`docker history`**](https://docs.docker.com/engine/reference/commandline/history) shows history of image.
     - [**`docker tag`**](https://docs.docker.com/engine/reference/commandline/tag) tags an image to a name (local or registry).
 
-## Container Commands
+## Containers
+A container is a runnable instance of an image. As you build your image, you deploy your application and dependencies. Then, multiple containers can be instantiated, each isolated from one another. Each container instance has its own filesystem, memory, and network interface.
+
+### Container Commands
 - [**`docker ps`**](https://docs.docker.com/engine/reference/commandline/ps) shows running containers.
 - **[`docker container ls`](https://docs.docker.com/engine/reference/commandline/container_ls/)** check if the container is running. The output tells us:
   - Which image the container is running; a short form of the container ID that Docker uniquely generates;
@@ -71,3 +84,6 @@ Docker.com hosts its own [index](https://hub.docker.com/) to a central registr
 - [**`docker export`**](https://docs.docker.com/engine/reference/commandline/export) turns container filesystem into tarball archive stream to STDOUT.
 - [**`docker exec`**](https://docs.docker.com/engine/reference/commandline/exec) to execute a command in a container.
   - To enter a running container, attach a new shell process to a running container called foo, use: `**docker exec -it foo /bin/bash**`
+
+## Dockerfile
+A Dockerfile is a file that defines a set of instructions that creates an image. Each instruction in the Dockerfile creates a layer in the image. For the most part, when you rebuild the image, only the layers that have changed are rebuilt. The Dockerfile can be distributed to others and allows them to recreate a new image in the same manner you created it. While this allows you to distribute the instructions on how to create the image, the main way to distribute your image is to publish it to a registry.
