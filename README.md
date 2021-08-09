@@ -6,14 +6,12 @@ My notes on containers, docker, and K8s.
 - **Checking Docker Version: `docker version`**
 
 ## Registries
-A repository is a *hosted* collection of tagged images that together create the file system for a container. A registry is a *host* (a server) that stores repositories and provides an HTTP API for [managing the uploading and downloading of repositories](https://docs.docker.com/engine/tutorials/dockerrepos/).
-Docker.com hosts its own [index](https://hub.docker.com/) to a central registry which contains a large number of repositories.
-
-Container registries are a collection of image repositories. You can base your images on a registry image. You can create containers directly from an image in a registry. The relationship between Docker containers, images, and registries is an important concept when architecting and building containerized applications or microservices. This approach greatly shortens the time between development and deployment.
-
-Docker has a public registry hosted at the Docker Hub that you can use. .NET Core related images are listed at the Docker Hub.
-
-The Microsoft Container Registry (MCR) is the official source of Microsoft-provided container images. The MCR is built on Azure CDN to provide globally-replicated images. However, the MCR does not have a public-facing website and the primary way to learn about Microsoft-provided container images is through the Microsoft Docker Hub pages.
+* A repository is a *hosted* collection of tagged images that together create the file system for a container. 
+* A registry is a *host* (a server) that stores repositories and provides an HTTP API for [managing the uploading and downloading of repositories](https://docs.docker.com/engine/tutorials/dockerrepos/).
+* Docker.com hosts its own [index](https://hub.docker.com/) to a central registry which contains a large number of repositories.
+* The Microsoft Container Registry (MCR) is the official source of Microsoft-provided container images.
+    * The MCR is built on Azure CDN to provide globally-replicated images.
+    * The MCR does not have a public-facing website and the primary way to learn about Microsoft-provided container images is through the Microsoft Docker Hub pages.
 
 ### Repositories Command
 - [`**docker login**`](https://docs.docker.com/engine/reference/commandline/login) to login to a registry.
@@ -23,7 +21,10 @@ The Microsoft Container Registry (MCR) is the official source of Microsoft-provi
 - [**`docker push`**](https://docs.docker.com/engine/reference/commandline/push) pushes an image to the registry from local machine.
 
 ## Images
-An image is an ordered collection of filesystem changes that form the basis of a container. The image doesn't have a state and is read-only. Much the time an image is based on another image, but with some customization. For example, when you create an new image for your application, you would base it on an existing image that already contains the .NET Core runtime. Because containers are created from images, images have a set of run parameters (such as a starting executable) that run when the container starts.
+* An image is an ordered collection of filesystem changes that form the basis of a container.
+* The image doesn't have a state and is read-only.
+* Most of the time, an image is based on another image, but with some customization.
+* Because containers are created from images, images have a set of run parameters (such as a starting executable) that run when the container starts.
 
 ### Image Commands
 - [**`docker images`**](https://docs.docker.com/engine/reference/commandline/images) shows all images.
