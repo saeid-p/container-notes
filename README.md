@@ -43,14 +43,17 @@ A container is a runnable instance of an image. As you build your image, you dep
 
 ### Container Commands
 - [`docker ps`](https://docs.docker.com/engine/reference/commandline/ps) shows running containers.
+   - `docker ps -a` shows running and stopped containers.
 - [`docker container ls`](https://docs.docker.com/engine/reference/commandline/container_ls/) check if the container is running. The output tells us:
   - Which image the container is running; a short form of the container ID that Docker uniquely generates;
   - The container name that Docker will randomly assign unless we supply a name;
   - The command running in the container.
+- [`docker stats`](https://docs.docker.com/engine/reference/commandline/stats) shows containers' resource usage statistics.
+   - `docker stats --all` shows a running list of containers.
 - [`docker create`](https://docs.docker.com/engine/reference/commandline/create) creates a container but does not start it.
 - [`docker run`](https://docs.docker.com/engine/reference/commandline/run) creates and starts a container in one operation.
   - Normally if you run a container without options it will start and stop immediately.
-  - If you want keep it running you can run `docker run -it container_id --name friendly-name`
+  - If you want to keep it running, you can run `docker run -it container_id --name friendly-name`
     - `-i` will keep the STDIN open even if not attached.
     - `-t` will allocate a command line session (pseudo-TTY).
     - `-d` will detach the container from the current session and run it in the background.
@@ -79,10 +82,8 @@ A container is a runnable instance of an image. As you build your image, you dep
 - [`docker events`](https://docs.docker.com/engine/reference/commandline/events) gets events from container.
 - [`docker port`](https://docs.docker.com/engine/reference/commandline/port) shows public facing port of container.
 - [`docker top`](https://docs.docker.com/engine/reference/commandline/top) shows running processes in container.
-- [`docker stats`](https://docs.docker.com/engine/reference/commandline/stats) shows containers' resource usage statistics.
+
 - [`docker diff`](https://docs.docker.com/engine/reference/commandline/diff) shows changed files in the container's FS.
-- `docker ps -a` shows running and stopped containers.
-- `docker stats --all` shows a running list of containers.
 - [`docker cp`](https://docs.docker.com/engine/reference/commandline/cp) copies files or folders between a container and the local filesystem.
 - [`docker export`](https://docs.docker.com/engine/reference/commandline/export) turns container filesystem into tarball archive stream to STDOUT.
 - [`docker exec`](https://docs.docker.com/engine/reference/commandline/exec) to execute a command in a container.
