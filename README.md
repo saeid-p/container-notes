@@ -14,7 +14,7 @@ My notes on containers, docker, and K8s.
     * The MCR does not have a public-facing website and the primary way to learn about Microsoft-provided container images is through the Microsoft Docker Hub pages.
 
 ### Repositories Command
-- [`**docker login**`](https://docs.docker.com/engine/reference/commandline/login) to login to a registry.
+- [**`docker login`**](https://docs.docker.com/engine/reference/commandline/login) to login to a registry.
 - [**`docker logout`**](https://docs.docker.com/engine/reference/commandline/logout) to logout from a registry.
 - [**`docker search`**](https://docs.docker.com/engine/reference/commandline/search) searches registry for image.
 - [**`docker pull`**](https://docs.docker.com/engine/reference/commandline/pull) pulls an image from registry to local machine.
@@ -34,7 +34,7 @@ My notes on containers, docker, and K8s.
 - [**`docker commit`**](https://docs.docker.com/engine/reference/commandline/commit) creates image from a container, pausing it temporarily if it is running.
 - [**`docker rmi`**](https://docs.docker.com/engine/reference/commandline/rmi) removes an image.
 - [**`docker load`**](https://docs.docker.com/engine/reference/commandline/load) loads an image from a tar archive as STDIN, including images and tags.
-- [`**docker save**`](https://docs.docker.com/engine/reference/commandline/save) saves an image to a tar archive stream to STDOUT with all parent layers, tags & versions.
+- [**`docker save`**](https://docs.docker.com/engine/reference/commandline/save) saves an image to a tar archive stream to STDOUT with all parent layers, tags & versions.
     - [**`docker history`**](https://docs.docker.com/engine/reference/commandline/history) shows history of image.
     - [**`docker tag`**](https://docs.docker.com/engine/reference/commandline/tag) tags an image to a name (local or registry).
 
@@ -47,7 +47,7 @@ A container is a runnable instance of an image. As you build your image, you dep
   - Which image the container is running; a short form of the container ID that Docker uniquely generates;
   - The container name that Docker will randomly assign unless we supply a name;
   - The command running in the container.
-- [`**docker create**`](https://docs.docker.com/engine/reference/commandline/create) creates a container but does not start it.
+- [**`docker create`**](https://docs.docker.com/engine/reference/commandline/create) creates a container but does not start it.
 - [**`docker run`**](https://docs.docker.com/engine/reference/commandline/run) creates and starts a container in one operation.
   - Normally if you run a container without options it will start and stop immediately.
   - If you want keep it running you can run `**docker run -it container_id --name friendly-name**`
@@ -74,6 +74,7 @@ A container is a runnable instance of an image. As you build your image, you dep
 - [**`docker kill`**](https://docs.docker.com/engine/reference/commandline/kill) sends a SIGKILL to a running container.
 - [`**docker attach**`](https://docs.docker.com/engine/reference/commandline/attach) will connect to a running container.
 - [**`docker logs`**](https://docs.docker.com/engine/reference/commandline/logs) gets logs from container. (You can use a custom log driver, but logs is only available for `json-file` and `journald` in 1.10).
+   - `docker logs -f --tail 100 {ContainerId}`
 - [**`docker inspect`**](https://docs.docker.com/engine/reference/commandline/inspect) looks at all the info on a container (including IP address).
 - [**`docker events`**](https://docs.docker.com/engine/reference/commandline/events) gets events from container.
 - [**`docker port`**](https://docs.docker.com/engine/reference/commandline/port) shows public facing port of container.
