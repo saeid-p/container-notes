@@ -17,8 +17,10 @@ My notes on containers, docker, and K8s.
 - [`docker login`](https://docs.docker.com/engine/reference/commandline/login) to login to a registry.
 - [`docker logout`](https://docs.docker.com/engine/reference/commandline/logout) to logout from a registry.
 - [`docker search`](https://docs.docker.com/engine/reference/commandline/search) searches registry for image.
+   - `docker search redis` 
 - [`docker pull`](https://docs.docker.com/engine/reference/commandline/pull) pulls an image from registry to local machine.
-- [`docker push`](https://docs.docker.com/engine/reference/commandline/push) pushes an image to the registry from local machine.
+   - `docker pull redis`
+- [`docker push`](https://docs.docker.com/engine/reference/commandline/push) pushes an image to the registry from the local machine.
 
 ## Images
 * An image is an ordered collection of filesystem changes that form the basis of a container.
