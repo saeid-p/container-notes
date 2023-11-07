@@ -1,0 +1,37 @@
+version: "1"
+# Dependant services
+services:
+  redis:
+    image: "redis:latest"
+    container_name: 'redis-local'
+    environment:
+      - USERNAME=${USER}
+      - PASSWORD=${PASS}
+    command: redis-server --save 60 1 --loglevel warning
+    ports:
+      - "6379:6379"
+    volumes:
+      - ${HOME}/redis/data:/data
+    networks:
+      - my-service-network
+
+  main-service:
+    build:
+      context: main-service
+      dockerfile: Dockerfile
+      args:
+        - Arg1=${Arg1}
+    environment:
+      - DB_NAME=${DB_NAME}
+      - DB_PORT=27017
+    ports:
+      - "127.0.0.1:3001:3001"
+    networks:
+      - my-service-network
+    restart: always
+    labels:
+      - "traefik.http.routers.backend.rule=Host(`${DOMAIN_NAME}`) && PathPrefix(`/api`)"
+      
+
+networks:
+  my-service-network:
