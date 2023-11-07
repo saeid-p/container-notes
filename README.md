@@ -92,11 +92,14 @@ A container is a runnable instance of an image. As you build your image, you dep
   - To enter a running container, attach a new shell process to a running container called foo, use: `docker exec -it foo /bin/bash`
 
 ## [Dockerfile](https://docs.docker.com/engine/reference/builder/)
-A Dockerfile is a file that defines a set of instructions that creates an image. Each instruction in the Dockerfile creates a layer in the image. For the most part, when you rebuild the image, only the layers that have changed are rebuilt. The Dockerfile can be distributed to others, allowing them to recreate a new image in the same way you created it. While this allows you to distribute the instructions on how to create the image, the primary way to distribute your image is to publish it to a registry.
+A Dockerfile is a file that defines a set of instructions that creates an image. Each instruction in the Dockerfile creates a layer in the image. For the most part, when you rebuild the image, only the layers that have changed are rebuilt. The Dockerfile can be distributed to others, allowing them to recreate a new image as you created it. While this allows you to distribute the instructions on creating the image, the primary way to distribute your image is to publish it to a registry.
+
+- Build an image based on a Dockerfile: `docker build -t saeid-image:image-tag .`
+- Run an instance of the image using `docker run -d --name saeid-container -p 8080:8080 saeid-image:image-tag`
 
 ## [Docker Compose](https://docs.docker.com/compose/)
 Compose is a tool for defining and running multi-container Docker applications. With Compose, you use a YAML file to configure your application's services. Then, with a single command, you create and start all the services from your configuration.
-Compose works in all environments; production, staging, development, testing, as well as CI workflows. It also has commands for managing the whole lifecycle of your application:
+Compose works in all environments: production, staging, development, testing, and CI workflows. It also has commands for managing the whole lifecycle of your application:
 - Start, stop, and rebuild services
 - View the status of running services
 - Stream the log output of running services
