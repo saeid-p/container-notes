@@ -8,11 +8,13 @@ ENV NODE_ENV $NODE_ENV
 ARG ENV
 ENV ENV $ENV
 
-COPY . /src
+# Copies app folder content into src folder.
+COPY ./app /src
+# Sets src as the working directory of the container.
 WORKDIR /src
 
-RUN npm install
+# RUN npm install
 
 EXPOSE 8080
 # CMD yarn start --production
-ENTRYPOINT [ "node", "./app.js" ]
+ENTRYPOINT [ "node", "./index.js" ]
