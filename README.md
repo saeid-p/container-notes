@@ -5,41 +5,6 @@ My notes on containers, docker, and K8s.
 - [Installation Guide](https://docs.docker.com/engine/install/ubuntu/)
 - Checking Docker Version: `docker version`
 
-## Registries
-* A repository is a *hosted* collection of tagged images that create a container's file system. 
-* A registry is a *host* (a server) that stores repositories and provides an HTTP API for [managing the uploading and downloading of repositories](https://docs.docker.com/engine/tutorials/dockerrepos/).
-* Docker.com hosts its own [index](https://hub.docker.com/) to a central registry which contains a large number of repositories.
-* The Microsoft Container Registry (MCR) is the official source of Microsoft-provided container images.
-    * The MCR is built on Azure CDN to provide globally-replicated images.
-    * The MCR does not have a public-facing website and the primary way to learn about Microsoft-provided container images is through the Microsoft Docker Hub pages.
-
-### Repositories Command
-- [`docker login`](https://docs.docker.com/engine/reference/commandline/login) to login to a registry.
-- [`docker logout`](https://docs.docker.com/engine/reference/commandline/logout) to logout from a registry.
-- [`docker search`](https://docs.docker.com/engine/reference/commandline/search) searches registry for image.
-   - `docker search redis` 
-- [`docker pull`](https://docs.docker.com/engine/reference/commandline/pull) pulls an image from registry to local machine.
-   - `docker pull redis`
-- [`docker push`](https://docs.docker.com/engine/reference/commandline/push) pushes an image to the registry from the local machine.
-
-## Images
-* An image is an ordered collection of filesystem changes that form the basis of a container.
-* The image doesn't have a state and is read-only.
-* Most of the time, an image is based on another image but with some customization.
-* Because containers are created from images, images have a set of run parameters (such as a starting executable) that run when the container starts.
-
-### Image Commands
-- [`docker images`](https://docs.docker.com/engine/reference/commandline/images) shows all images.
-    - [`docker image ls`](https://docs.docker.com/engine/reference/commandline/image_ls/) lists images.
-- [`docker import`](https://docs.docker.com/engine/reference/commandline/import) creates an image from a tarball.
-- [`docker build`](https://docs.docker.com/engine/reference/commandline/build) creates image from Dockerfile.
-- [`docker commit`](https://docs.docker.com/engine/reference/commandline/commit) creates an image from a container, pausing it temporarily if it is running.
-- [`docker rmi`](https://docs.docker.com/engine/reference/commandline/rmi) removes an image.
-- [`docker load`](https://docs.docker.com/engine/reference/commandline/load) loads an image from a tar archive as STDIN, including images and tags.
-- [`docker save`](https://docs.docker.com/engine/reference/commandline/save) saves an image to a tar archive stream to STDOUT with all parent layers, tags & versions.
-    - [`docker history`](https://docs.docker.com/engine/reference/commandline/history) shows history of image.
-    - [`docker tag`](https://docs.docker.com/engine/reference/commandline/tag) tags an image to a name (local or registry).
-
 ## Containers
 A container is a runnable instance of an image. As you build your image, you deploy your application and dependencies. Then, multiple containers can be instantiated, each isolated from one another. Each container instance has its own filesystem, memory, and network interface.
 
@@ -68,6 +33,7 @@ A container is a runnable instance of an image. As you build your image, you dep
    - To get into a shell environment within a container (running or not), run:
       - `dociet run -it my-container sh`
 - [`docker rename`](https://docs.docker.com/engine/reference/commandline/rename/) allows the container to be renamed.
+  - Example: `docker rename old_name new_name`
 - [`docker rm`](https://docs.docker.com/engine/reference/commandline/rm) deletes a container.
   - If you want to remove the volumes associated with the container, the deletion of the container must include the `-v` switch.
 - [`docker update`](https://docs.docker.com/engine/reference/commandline/update/) updates a container's resource limits.
@@ -85,6 +51,7 @@ A container is a runnable instance of an image. As you build your image, you dep
 - [`docker inspect`](https://docs.docker.com/engine/reference/commandline/inspect) looks at all the info on a container (including IP address).
 - [`docker events`](https://docs.docker.com/engine/reference/commandline/events) gets events from container.
 - [`docker port`](https://docs.docker.com/engine/reference/commandline/port) shows public facing port of container.
+  - Example: `docker port my-container`
 - [`docker top`](https://docs.docker.com/engine/reference/commandline/top) shows running processes in container.
 
 - [`docker diff`](https://docs.docker.com/engine/reference/commandline/diff) shows changed files in the container's FS.
@@ -101,6 +68,7 @@ A Dockerfile is a file that defines a set of instructions that creates an image.
 
 ## [Docker Compose](https://docs.docker.com/compose/)
 Compose is a tool for defining and running multi-container Docker applications. With Compose, you use a YAML file to configure your application's services. Then, with a single command, you create and start all the services from your configuration.
+
 Compose works in all environments: production, staging, development, testing, and CI workflows. It also has commands for managing the whole lifecycle of your application:
 - Start, stop, and rebuild services
 - View the status of running services
@@ -109,4 +77,42 @@ Compose works in all environments: production, staging, development, testing, an
 
 [Learn more](https://docs.docker.com/compose/gettingstarted/) on how to use Docker Compose.
 
-Run `docker compose up` in the directory with a `docker-compose.yml` to run and build the package.
+- Run `docker compose up` in the directory with a `docker-compose.yml` to run and build the package.
+- Run `docker compose down` in the directory with a `docker-compose.yml` to turn it off.
+
+----
+
+## Images
+* An image is an ordered collection of filesystem changes that form the basis of a container.
+* The image doesn't have a state and is read-only.
+* Most of the time, an image is based on another image but with some customization.
+* Because containers are created from images, images have a set of run parameters (such as a starting executable) that run when the container starts.
+
+### Image Commands
+- [`docker images`](https://docs.docker.com/engine/reference/commandline/images) shows all images.
+    - [`docker image ls`](https://docs.docker.com/engine/reference/commandline/image_ls/) lists images.
+- [`docker import`](https://docs.docker.com/engine/reference/commandline/import) creates an image from a tarball.
+- [`docker build`](https://docs.docker.com/engine/reference/commandline/build) creates image from **Dockerfile**.
+- [`docker commit`](https://docs.docker.com/engine/reference/commandline/commit) creates an image from a container, pausing it temporarily if it is running.
+- [`docker rmi`](https://docs.docker.com/engine/reference/commandline/rmi) removes an image.
+- [`docker load`](https://docs.docker.com/engine/reference/commandline/load) loads an image from a tar archive as STDIN, including images and tags.
+- [`docker save`](https://docs.docker.com/engine/reference/commandline/save) saves an image to a tar archive stream to STDOUT with all parent layers, tags & versions.
+    - [`docker history`](https://docs.docker.com/engine/reference/commandline/history) shows history of image.
+    - [`docker tag`](https://docs.docker.com/engine/reference/commandline/tag) tags an image to a name (local or registry).
+
+## Registries
+* A repository is a *hosted* collection of tagged images that create a container's file system. 
+* A registry is a *host* (a server) that stores repositories and provides an HTTP API for [managing the uploading and downloading of repositories](https://docs.docker.com/engine/tutorials/dockerrepos/).
+* Docker.com hosts its own [index](https://hub.docker.com/) to a central registry which contains a large number of repositories.
+* The Microsoft Container Registry (MCR) is the official source of Microsoft-provided container images.
+    * The MCR is built on Azure CDN to provide globally-replicated images.
+    * The MCR does not have a public-facing website and the primary way to learn about Microsoft-provided container images is through the Microsoft Docker Hub pages.
+
+### Docker Image Repositories Command
+- [`docker login`](https://docs.docker.com/engine/reference/commandline/login) to login to a registry.
+- [`docker logout`](https://docs.docker.com/engine/reference/commandline/logout) to logout from a registry.
+- [`docker search`](https://docs.docker.com/engine/reference/commandline/search) searches registry for image.
+   - `docker search redis` 
+- [`docker pull`](https://docs.docker.com/engine/reference/commandline/pull) pulls an image from registry to local machine.
+   - `docker pull redis`
+- [`docker push`](https://docs.docker.com/engine/reference/commandline/push) pushes an image to the registry from the local machine.
