@@ -54,7 +54,7 @@ A container is a runnable instance of an image. As you build your image, you dep
    - `docker stats --all` shows a running list of containers.
 - [`docker create`](https://docs.docker.com/engine/reference/commandline/create) creates a container but does not start it.
 - [`docker run`](https://docs.docker.com/engine/reference/commandline/run) creates and starts a container in one operation.
-  - Normally if you run a container without options it will start and stop immediately.
+  - Normally, if you run a container without options, it will start and stop immediately.
   - If you want to keep it running, you can run `docker run -it container_id --name friendly-name`
     - `-i` will keep the STDIN open even if not attached.
     - `-t` will allocate a command line session (pseudo-TTY).
@@ -63,8 +63,10 @@ A container is a runnable instance of an image. As you build your image, you dep
   - If you want to map a directory on the host to a docker container: `docker run -v $HOSTDIR:$DOCKERDIR`
   - If you want a transient container, `docker run --rm` will remove the container after it stops.
     - `docker run --name yourname docker_image` will allow you to start and stop a container by calling it with the name.
-    - Create a new container from the "nginx" image and run it in the background with the `--detach` flag and with port 80 published with the `--publish` flag.
+    - To create a new container from the "nginx" image and run it in the background with the `--detach` flag and port 80 published with the `--publish` flag, run:
       - `docker container run --detach --publish 80:80 nginx:alpine`
+   - To get into a shell environment within a container (running or not), run:
+      - `dociet run -it my-container sh`
 - [`docker rename`](https://docs.docker.com/engine/reference/commandline/rename/) allows the container to be renamed.
 - [`docker rm`](https://docs.docker.com/engine/reference/commandline/rm) deletes a container.
   - If you want to remove the volumes associated with the container, the deletion of the container must include the `-v` switch.
