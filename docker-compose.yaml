@@ -1,37 +1,48 @@
 version: "1"
-# Dependant services
+
+networks:
+  my-network:
+
+
+volumes:
+  my-volume:
+
+
 services:
   redis:
     image: "redis:latest"
-    container_name: 'redis-local'
+    container_name: 'redis-local-test'
     environment:
       - USERNAME=${USER}
       - PASSWORD=${PASS}
     command: redis-server --save 60 1 --loglevel warning
     ports:
-      - "6379:6379"
+      - "4001:6379"
     volumes:
-      - ${HOME}/redis/data:/data
+      - type: volume
+        source: my-volume
+        target: /app
     networks:
-      - my-service-network
+      - my-network
 
   main-service:
+    container_name: "main-service-test"
+    # We could replace this build command with a `build: .` to point to a Dockerfile in the current folder.
     build:
-      context: main-service
+      # Context field is used to specify the build context for a service.
+      # The build context is the path to the directory containing the Dockerfile and any files or directories required for building the Docker image.
+      # The context field is particularly useful when your project structure has multiple directories, and you want to specify a subdirectory as the build context.
+      context: ./
       dockerfile: Dockerfile
+      # An example argument sent to Dockerfile.
       args:
-        - Arg1=${Arg1}
+        - DatabaseName=${DB_NAME}
     environment:
       - DB_NAME=${DB_NAME}
       - DB_PORT=27017
     ports:
       - "127.0.0.1:3001:3001"
     networks:
-      - my-service-network
-    restart: always
-    labels:
-      - "traefik.http.routers.backend.rule=Host(`${DOMAIN_NAME}`) && PathPrefix(`/api`)"
-      
-
-networks:
-  my-service-network:
+      - my-network
+    # Options: https://github.com/compose-spec/compose-spec/blob/master/spec.md#restart
+    restart: on-failure
