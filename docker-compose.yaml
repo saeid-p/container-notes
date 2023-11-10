@@ -3,15 +3,14 @@ version: "1"
 networks:
   my-network:
 
-
 volumes:
   my-volume:
 
 
 services:
-  redis:
+  redis-local-test:
     image: "redis:latest"
-    container_name: 'redis-local-test'
+    # container_name: 'redis-local-test'
     environment:
       - USERNAME=${USER}
       - PASSWORD=${PASS}
@@ -25,8 +24,8 @@ services:
     networks:
       - my-network
 
-  main-service:
-    container_name: "main-service-test"
+  main-service-test:
+    # container_name: "main-service-test"
     # We could replace this build command with a `build: .` to point to a Dockerfile in the current folder.
     build:
       # Context field is used to specify the build context for a service.
@@ -44,5 +43,19 @@ services:
       - "127.0.0.1:3001:3001"
     networks:
       - my-network
-    # Options: https://github.com/compose-spec/compose-spec/blob/master/spec.md#restart
-    restart: on-failure
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 2
+        delay: 10s
+        failure_action: rollback
+      # The placement setting specifies that this service needs to run as a worker role, rather than a manager role.
+      placement:
+        constraints:
+          - 'node.role == worker'
+      # Options: https://github.com/compose-spec/compose-spec/blob/master/spec.md#restart
+      restart_policy: 
+        condition: on-failure
+        max_attempts: 3
+        delay: 5s
+        window: 120s
